@@ -105,7 +105,7 @@ int main ( int argc, char *argv[] ) {
          choice = 1;
          while(choice !=0) {
             printf("\nWhat rank do you wish to see? [1-200]\n");
-            if(fgets(rank, 5, stdin) != NULL) {
+            if(fgets(rank, 500, stdin) != NULL) {
                numRank = atoi(rank);   
                if (numRank < 201 || numRank < 0) {
                   choice = 0;
@@ -117,11 +117,13 @@ int main ( int argc, char *argv[] ) {
          choice = 1;
          while (choice != 0) {
             printf("\nWould you like to see male(0), female (1), or both(2) name(s)?\n");
-            if (fgets(gender, 2, stdin) != NULL) {
-               numGender = atoi(gender);
-               if (numGender > 2 || numGender < 0) {
+            fflush(stdin);
+            if (fgets(gender, 500, stdin) != NULL) {
+               gender[1]   = '\0';
+               if ( strcmp(gender, "0") != 0 && strcmp(gender, "1") != 0 && strcmp(gender, "2") != 0) {
                   printf("Only the numbers 0, 1, and 2 are acceptable");
                } else {
+                  numGender = atoi(gender);
                   if (numGender == 0){
                      printf("Rank: %d, Male: %s (%d)\n", popNames.rank[numRank-1], popNames.maleName[numRank-1], popNames.maleNumber[numRank-1]);
                      choice = 0;
@@ -142,15 +144,17 @@ int main ( int argc, char *argv[] ) {
                chop(name);
                printf("Would you like to see male(0), female (1), or both(2) name(s)? [0-2]:\n");
                choice = 1;
-               while(choice != 0) {
-                  if (fgets(gender, 20, stdin) != NULL) {
-                     numGender = atoi(gender);
-                     if (numGender > 2 || numGender < 0) {
+               while((choice == 1)) {
+                  fflush(stdin);
+                  if (fgets(gender, 500, stdin) != NULL) {
+                     gender[1] = '\0';
+                     fflush(stdin);
+                     if (strcmp(gender, "0") != 0 && strcmp(gender, "1") != 0 && strcmp(gender, "2") != 0) {
                         choice = 1;
                         printf("Only the number 0, 1, and 2 are acceptable.\n");
                      } else {
                         choice = 0;
-                        
+                        numGender = atoi(gender);
                      }    
                   }   
                }
@@ -165,7 +169,6 @@ int main ( int argc, char *argv[] ) {
                      printf("In %s, the male name %s was not found.\n", decades2, name );
                   }
                } else if ( numGender == 1) {
-
                   for(i = 0; i < 200; i++) {
                      if (strcmp(name, popNames.femaleName[i]) ==0 ) {
                         printf("In %s, the female name %s is ranked %d with a count of %d.\n", decades2, name, i + 1, popNames.femaleNumber[i] );
@@ -176,6 +179,7 @@ int main ( int argc, char *argv[] ) {
                      printf("In %s, the female name %s was not found.\n", decades2, name );
                   }
                } else if ( numGender == 2) {
+                  j = 1;
                      for(i = 0; i < 200; i++) {
                      if (strcmp(name, popNames.femaleName[i]) ==0 ) {
                         printf("In %s, the female name %s is ranked %d with a count of %d ", decades2, name, i + 1, popNames.femaleNumber[i]);
@@ -185,14 +189,15 @@ int main ( int argc, char *argv[] ) {
                   if (j != 0) {
                      printf("The female name %s was not ranked", name );
                   }
+                  j = 1;
                   for(i = 0; i < 200; i++) {
                      if (strcmp(name, popNames.maleName[i]) ==0 ) {
-                        printf(" and the male name %s is ranked %d with a count of %d\n", name, popNames.rank[i], popNames.maleNumber[i]);
+                        printf(" and the male name %s is ranked %d with a count of %d.\n", name, popNames.rank[i], popNames.maleNumber[i]);
                         j = 0;
                      }
                  }
                  if (j != 0) {
-                     printf("The male name %s was not ranked\n", name );
+                     printf("and the male name %s was not ranked\n", name );
                   }
                }
             }
@@ -260,7 +265,6 @@ int main ( int argc, char *argv[] ) {
       }
    } while ((userIn == 0));
 
-
       strcpy(branch, "");
       strcpy(gender, "");
       strcpy(name, "");
@@ -268,6 +272,8 @@ int main ( int argc, char *argv[] ) {
       strcpy(decade, "");
       strcpy(decadeChoice, "");
       strcpy(branchEnd, "");
+
+   
 
    } while ((choice !=0 ));
 
