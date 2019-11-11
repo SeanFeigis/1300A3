@@ -37,7 +37,7 @@ int main ( int argc, char *argv[] ) {
       do {  
          printf("What decade do you want to look at? [1880 to 2010]\n");
          fflush(stdin);
-         if (fgets(decade, 5, stdin) != NULL) {
+         if (fgets(decade, 500, stdin) != NULL) {
             decade[4] = '\0';
             fflush(stdin);
             if (strcmp(decade, "1880") == 0 || strcmp(decade, "1890") == 0 || strcmp(decade, "1900") == 0 || strcmp(decade, "1910") == 0 || strcmp(decade, "1920") == 0 || strcmp(decade, "1930") == 0 || strcmp(decade, "1940") == 0 || strcmp(decade, "1950") == 0 || strcmp(decade, "1960") == 0 || strcmp(decade, "1970") == 0 || strcmp(decade, "1980") == 0 || strcmp(decade, "1990") == 0 || strcmp(decade, "2000") == 0 || strcmp(decade, "2010") == 0 ) {
@@ -82,9 +82,6 @@ int main ( int argc, char *argv[] ) {
       }
       */
 
-     
-     while((getchar())!='\n');
-      choice = 1;
    
      do {
 
@@ -224,7 +221,7 @@ int main ( int argc, char *argv[] ) {
             branchEnd[1] = '\0';
             fflush(stdin);
             if (strcmp(branchEnd, "Y") != 0 && strcmp(branchEnd, "N") != 0) {
-               printf("Only the single characters Y and N are acceptable.");
+               printf("Only the single characters Y and N are acceptable.\n");
                userIn = 0;
             }
             else if (strcmp(branchEnd, "Y") == 0) {
@@ -243,16 +240,26 @@ int main ( int argc, char *argv[] ) {
       strcpy(name, "");
       strcpy(rank, "");
 
-      fflush(stdin);
+      
       printf("\nWould you like to select another year? [Y or N]\n");
-      if (fgets(end, 2 , stdin) != NULL) {
-         chop(end);
-         if (strcmp(end, "Y") == 0) {
+   do  {
+      fflush(stdin);
+      if (fgets(end, 500 , stdin) != NULL) {
+         end[1] = '\0';
+         fflush(stdin);
+         if (strcmp(end, "Y") != 0 && strcmp(end, "N") != 0) {
+            printf("Only the single characters Y and N are acceptable.\n");
+            userIn = 0;
+         } else if (strcmp(end, "Y") ==0) {
             choice = 1;
+            userIn = 1;
          } else if (strcmp(end, "N") == 0) {
             choice = 0;
+            userIn = 1;
          }
       }
+   } while ((userIn == 0));
+
 
       strcpy(branch, "");
       strcpy(gender, "");
@@ -262,7 +269,7 @@ int main ( int argc, char *argv[] ) {
       strcpy(decadeChoice, "");
       strcpy(branchEnd, "");
 
-   } while ((choice = 1 ));
+   } while ((choice !=0 ));
 
    return (0);
 }
